@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stream Experience Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@700&family=Parisienne&family=Rubik+Moonrocks&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        *, *:before, *:after {
+            box-sizing: border-box;
+            font-family: "Trebuchet MS";
+        }
+
+        .card {
+            height: 1080px;
+            width: 1920px;
+            /*height: 100%;*/
+            /*width: 100%;*/
+            background: #5E5651;
+            position: relative;
+            overflow: hidden;
+        }
+        .logo {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.25;
+            z-index: 1;
+        }
+
+        .logo > img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transform: rotate(-18deg);
+        }
+
+        .main-content {
+            height: 100%;
+            width: 100%;
+            padding: 30px;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .header-text {
+            color: #fff;
+            font-size: 72px;
+        }
+
+        .header-subtitle {
+            color: #b6b6b6;
+            font-size: 36px;
+            font-style: italic;
+            margin-bottom: 60px;
+        }
+
+        .number-grid {
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            grid-gap: 0;
+            border: 5px solid #2c2c2c;
+        }
+
+        .number {
+            position: relative;
+            color: #2c2c2c;
+        }
+
+
+        .number:not(:nth-child(5N))::after {
+            content: '';
+            display: block;
+            position: absolute;
+            border-right: 5px solid #2c2c2c;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+        }
+
+        .number:nth-child(n+6)::after {
+            content: '';
+            display: block;
+            position: absolute;
+            border-top: 5px solid #2c2c2c;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+        }
+        .number .number-content:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-image: url('./assets/paw.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0;
+            transform: scale(10);
+            transition: transform 1s ease;
+        }
+
+        .number.already-stamped .number-content::after {
+            opacity: 0.5;
+            transform: scale(1);
+        }
+
+        .number.stamped .number-content::after {
+            transform: scale(10);
+            opacity: 0.5;
+        }
+
+        .number-content {
+            height: 100%;
+            font-size: 250px;
+            text-align: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cabin Sketch', sans-serif;
+        }
+
+        .bottom-section {
+            display: flex;
+            align-items: flex-start;
+            margin-top: 40px;
+        }
+
+        .level-section {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            margin-right: 50px;
+        }
+
+        .level-label {
+            font-size: 24px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #b6b6b6;
+        }
+
+        .level-number {
+            color: #fff;
+            font-size:72px;
+            margin-top: -10px
+        }
+
+        .belong-to-section {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .belong-to-name {
+            font-size: 95px;
+            line-height: 85px;
+            text-align: center;
+            position: relative;
+            color: #fff;
+        }
+
+        .belong-to-name:before {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            background: #2c2c2c;
+            height: 5px;
+            z-index: 1;
+        }
+
+        .real-name {
+            position: relative;
+            z-index: 2;
+            font-family: 'Parisienne', cursive;
+        }
+
+        .belong-to-label {
+            font-size: 24px;
+            color: #b6b6b6;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="logo">
+        <img src="./assets/logo.png" />
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <div class="header-text">
+                Swolekat Loyalty Card
+            </div>
+            <div class="header-subtitle">
+                Free raffle ticket for every level!
+            </div>
+        </div>
+        <div class="number-grid">
+            <div class="number" id="1">
+                <div class="number-content">
+                    1
+                </div>
+            </div>
+            <div class="number" id="2">
+                <div class="number-content">
+                    2
+                </div>
+            </div>
+            <div class="number" id="3">
+                <div class="number-content">
+                    3
+                </div>
+            </div>
+            <div class="number" id="4">
+                <div class="number-content">
+                    4
+                </div>
+            </div>
+            <div class="number" id="5">
+                <div class="number-content">
+                    5
+                </div>
+            </div>
+            <div class="number" id="6">
+                <div class="number-content">
+                    6
+                </div>
+            </div>
+            <div class="number" id="7">
+                <div class="number-content">
+                    7
+                </div>
+            </div>
+            <div class="number" id="8">
+                <div class="number-content">
+                    8
+                </div>
+            </div>
+            <div class="number" id="9">
+                <div class="number-content">
+                    9
+                </div>
+            </div>
+            <div class="number" id="10">
+                <div class="number-content">
+                    10
+                </div>
+            </div>
+        </div>
+        <div class="bottom-section">
+            <div class="level-section">
+                <div class="level-label">Level</div>
+                <div class="level-number" id="level-number">0</div>
+            </div>
+            <div class="belong-to-section">
+                <div class="belong-to-name">
+                    <span class="real-name" id="username">
+                        Swolekat
+                    </span>
+                </div>
+                <div class="belong-to-label">
+                    Card Owner
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    const levelNumberElement = document.getElementById('level-number');
+    const usernameElement = document.getElementById('username');
+    const numberElements = [
+        document.getElementById('1'),
+        document.getElementById('2'),
+        document.getElementById('3'),
+        document.getElementById('4'),
+        document.getElementById('5'),
+        document.getElementById('6'),
+        document.getElementById('7'),
+        document.getElementById('8'),
+        document.getElementById('9'),
+        document.getElementById('10'),
+    ];
+
+    const init = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const userName = urlParams.get('username');
+        const level = Number.parseInt(urlParams.get('level'));
+        // note this should be the number BEFORE adding one
+        const exp = Number.parseInt(urlParams.get('exp')) % 10;
+        usernameElement.innerHTML = userName;
+        levelNumberElement.innerHTML = level;
+        let elementToStamp;
+        for(let x = 1; x < 11; x++) {
+            const index = x -1;
+            const element = numberElements[index];
+            if (x <= exp){
+                element.className = `number already-stamped`;
+            }
+            if(x === exp +1){
+                element.className = `number`;
+                elementToStamp = element;
+            }
+        }
+        setTimeout(() => {
+            elementToStamp.className = `number stamped`;
+            setTimeout(() => {
+                elementToStamp.className = `number already-stamped`;
+                setTimeout(() => {
+                    const audio = new Audio('./assets/stampSound.mp3');
+                    audio.volume = 1;
+                    audio.play();
+                }, 800);
+            }, 0)
+        }, 3000);
+    };
+
+    init();
+</script>
+</body>
+</html>
